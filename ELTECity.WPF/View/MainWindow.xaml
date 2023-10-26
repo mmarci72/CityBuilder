@@ -1,0 +1,32 @@
+﻿<Window x:Class="ELTECity.WPF.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="ELTECity - Main Menu" Height="280" Width="400" ResizeMode="CanMinimize" 
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel>
+
+            <Label Width="250" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                     FontSize="18" Content="Enter your city name:" HorizontalContentAlignment="Center">
+            </Label>
+
+            <TextBox Width="250" Height="40" Margin="0 0 0 20" MaxLength="25" FontSize="18" Name="CName"
+                     VerticalAlignment="Center" HorizontalAlignment="center" TextAlignment="Center" VerticalContentAlignment="Center"
+                     Background="White" BorderThickness="1" BorderBrush="Black"> ELTECity
+            </TextBox>
+
+            <Button Width="150" Height="50" Name="btn1" Background="White" 
+            BorderBrush="Black" BorderThickness="1" 
+            Content="New Game" FontSize="18" Margin="0 0 0 20" Command="{Binding NewGameCommand}" CommandParameter="{Binding ElementName=CName, Path=Text}">
+            </Button>
+
+            <Button Width="150" Height="50" Name="btn2" Background="White" 
+            BorderBrush="Black" BorderThickness="1" 
+            Content="Quit" FontSize="18" Command="{Binding ExitCommand}">
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

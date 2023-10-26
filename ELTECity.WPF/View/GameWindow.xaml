@@ -1,0 +1,256 @@
+﻿<Window x:Class="ELTECity.WPF.View.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELTECity.WPF.View"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="GameWindow" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <ItemsControl Name="Build_Mode" ItemsSource="{Binding Buildings}" Visibility="{Binding BuildMode_WD}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" Width="350"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button BorderThickness="1" Background="{Binding Color}" Command="{Binding SelectBuildingCommand}" CommandParameter="{Binding Number}">
+                            <StackPanel>
+                                <Image Height="128" Width="128" Source="{Binding BuildingPicture}" />
+                                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Content="{Binding BuildingName}" />
+                                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Content="{Binding Price}" />
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <StackPanel Name="Financial_statistics" Orientation="Vertical" Width="350" Margin="-350 0 0 0" Visibility="{Binding FinancialAndPopulation_WD}">
+                <Label Content="Tax rate:" Margin="0 10 0 0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                <xctk:DoubleUpDown FormatString="P0" Increment=".01" Name="UpDownControl" Minimum="0" Maximum="1" Value="{Binding TaxPercentage}" Width="200"/>
+
+                <Separator Margin="0 20 0 20" Width="120"></Separator>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Current Population: " FontSize="18"></Label>
+                    <Label Content="{Binding PopulationSize}" FontSize="18"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Retired people: " FontSize="18"></Label>
+                    <Label Content="{Binding NumberOfRetired}" FontSize="18"></Label>
+                </StackPanel>
+
+                <Separator Margin="0 20 0 20" Width="120"></Separator>
+
+                <Label Content="Current year's statistics: " FontSize="18" HorizontalContentAlignment="Center"></Label>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Income: " FontSize="18"></Label>
+                    <Label Content="{Binding CurrentIncome}" FontSize="18"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Expense: " FontSize="18"></Label>
+                    <Label Content="{Binding CurrentExpense}" FontSize="18"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Profit: " FontSize="18"></Label>
+                    <Label Content="{Binding CurrentProfit}" FontSize="18"></Label>
+                </StackPanel>
+
+                <Separator Margin="0 20 0 20" Width="120"></Separator>
+
+                <Label Content="Last year's statistics: " FontSize="18" HorizontalContentAlignment="Center"></Label>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Income: " FontSize="18"></Label>
+                    <Label Content="{Binding LastIncome}" FontSize="18"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Expense: " FontSize="18"></Label>
+                    <Label Content="{Binding LastExpense}" FontSize="18"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Profit: " FontSize="18"></Label>
+                    <Label Content="{Binding LastProfit}" FontSize="18"></Label>
+                </StackPanel>
+
+                <Separator Margin="0 20 0 20" Width="120"></Separator>
+
+                <Label Content="Number of Degrees: " FontSize="18" HorizontalContentAlignment="Center"></Label>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Low Degree: " FontSize="18"></Label>
+                    <Label Content="{Binding LowDegreeNumber}" FontSize="18"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Medium Degree: " FontSize="18"></Label>
+                    <Label Content="{Binding MidDegreeNumber}" FontSize="18"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="High Degree: " FontSize="18"></Label>
+                    <Label Content="{Binding HighDegreeNumber}" FontSize="18"></Label>
+                </StackPanel>
+
+                <Separator Margin="0 20 0 20" Width="120"></Separator>
+
+                <ScrollViewer MaxHeight="220" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding ExpenseIncomeList}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="1" Rows="100" Width="350"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Content="{Binding Description}" Foreground="{Binding Color}" />
+                                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Content="{Binding Money}" Foreground="{Binding Color}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Fields}">
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="{Binding Size}" Columns="{Binding Size}"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Height="64" Width="64" BorderThickness="1" Command="{Binding TileClickCommand}" CommandParameter="{Binding Number}">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="BorderBrush" Value="{Binding MouseOverColor}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter Property="BorderBrush" Value="{Binding MouseLeaveColor}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Image Source="{Binding TilePicture}">
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <RotateTransform Angle="{Binding Rotate}"></RotateTransform>
+                                            <ScaleTransform ScaleX="{Binding ScaleX}" ScaleY="{Binding ScaleY}"></ScaleTransform>
+                                            <TranslateTransform X="{Binding TranslateX}" Y="{Binding TranslateY}"></TranslateTransform>
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                </Image>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
+
+        <StackPanel Grid.Row="0" Background="Ivory" Width="300" Margin="50" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="{Binding BuildingStatistics_WD}">
+            <Button Height="40" Background="White" Width="100" Margin="10"
+                        BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Content="Level up" Command="{Binding LevelUpCommand}">
+            </Button>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Building level: " FontSize="18"></Label>
+                <Label Content="{Binding BuildingLevel}" FontSize="18"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Building levelup cost: " FontSize="18"></Label>
+                <Label Content="{Binding BuildingLevelUpCost}" FontSize="18"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Number of worker/resident: " FontSize="18"></Label>
+                <Label Content="{Binding BuildingNumberOfPeople}" FontSize="18"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Happiness rate: " FontSize="18"></Label>
+                <Label Content="{Binding BuildingHappiness}" FontSize="18"></Label>
+            </StackPanel>
+        </StackPanel>
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Height="40" Background="White"
+                        BorderThickness="1" BorderBrush="Black"
+                        Name="BuildModebutton" Content="BuildMode" Command="{Binding BuildModeCommand}">
+
+            </Button>
+            <Button Grid.Column="1" Height="40" Background="White"
+                        BorderThickness="1" BorderBrush="Black"
+                        Name="CityMoneybutton" Content="{Binding Funds}" Command="{Binding FinancialAndPopulationCommand}">
+
+            </Button>
+            <Button Grid.Column="2" Height="40" Background="White"
+                        BorderThickness="1" BorderBrush="Black"
+                        Name="CityHappinessbutton" Content="{Binding Happiness}" Command="{Binding FinancialAndPopulationCommand}">
+
+            </Button>
+            <Button Grid.Column="3" Height="40" Background="White"
+                        BorderThickness="1" BorderBrush="Black"
+                        Name="CityNamebutton" FontSize="20" Content="{Binding CityName}"
+                        IsEnabled="False">
+
+            </Button>
+            <Button Grid.Column="4" Height="40" Background="White"
+                        BorderThickness="1" BorderBrush="Black"
+                        Name="Pausebutton" Content="Pause" IsEnabled="{Binding IsPaused}" Command="{Binding PauseGameCommand}">
+
+            </Button>
+            <Button Grid.Column="5" Height="40" Background="White"
+                        BorderThickness="1" BorderBrush="Black"
+                    FontSize="24"
+                        Name="GameTimebutton" Content="{Binding TimeType}" Command="{Binding TimeSpeedCommand}">
+
+            </Button>
+            <Button Grid.Column="6" Height="40" Background="White"
+                        BorderThickness="1" BorderBrush="Black"
+                        Name="Datebutton" FontSize="20" IsEnabled="False" Content="{Binding Date}">
+
+            </Button>
+            <Button Grid.Column="7" Height="40" Background="White"
+                        BorderThickness="1" BorderBrush="Black"
+                        Name="MainMenubutton" Content="Main Menu" Command="{Binding BackToMainMenuCommand}">
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
